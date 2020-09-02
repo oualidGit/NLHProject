@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,26 +15,32 @@ using System.Windows.Shapes;
 
 namespace NLHProject
 {
-    /// <summary>
-    /// Logique d'interaction pour FenPatient.xaml
-    /// </summary>
     public partial class FenPatient : Window
     {
         NLHEntities myBDD;
         Gestion ges;
-        
 
         public FenPatient(Gestion g)
         {
             myBDD = new NLHEntities();
             InitializeComponent();
             ges = g;
+            //empecher l'action coller dans le champs de texte NSS
+            txtNSS.CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, DisablePasting));
+        }
+
+        private void DisablePasting(object sender, ExecutedRoutedEventArgs e) 
+        {
+            e.Handled = true;
         }
 
         public FenPatient()
         {
             myBDD = new NLHEntities();
             InitializeComponent();
+            //empecher l'action coller dans le champs de texte NSS
+            txtNSS.CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, DisablePasting));
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -273,5 +280,19 @@ namespace NLHProject
             btnRechercher.IsEnabled = (txtRechercheNSS.Text.Length > 0);       
         }
 
+        private void txtNSS_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void txtNSS_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            NumberValidationTextBox(sender, e);
+        }
     }
 }

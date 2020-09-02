@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NLHProject"
         mc:Ignorable="d"
-        Title="FenParent" Height="461" Width="758" Loaded="Window_Loaded">
+        Title="Gestion des parents d'un patient" Height="461" Width="758" Loaded="Window_Loaded">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FFCBCBFC" Offset="0"/>
@@ -20,18 +20,18 @@
             <Grid Margin="1,1,-2.2,0.8">
                 <Label Content="Nom" HorizontalAlignment="Left" Margin="4,9,0,0" VerticalAlignment="Top"/>
                 <Label Content="Prenom" HorizontalAlignment="Left" Margin="4,40,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtPrenomParent" HorizontalAlignment="Left" Height="23" Margin="81,0,0,250.2" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120"/>
-                <TextBox x:Name="txtNomParent" HorizontalAlignment="Left" Height="23" Margin="81,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="txtPrenomParent" HorizontalAlignment="Left" Height="23" Margin="81,0,0,250.2" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" MaxLength="50"/>
+                <TextBox x:Name="txtNomParent" HorizontalAlignment="Left" Height="23" Margin="81,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" CharacterCasing="Upper" MaxLength="50"/>
                 <Label Content="Ville" HorizontalAlignment="Left" Margin="4,94,0,0" VerticalAlignment="Top"/>
                 <Label Content="Province" HorizontalAlignment="Left" Margin="4,128,0,0" VerticalAlignment="Top"/>
                 <Label Content="Code Postal" HorizontalAlignment="Left" Margin="4,160,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtVille" HorizontalAlignment="Left" Margin="81,0,0,190.2" TextWrapping="Wrap" Width="120" Height="23" VerticalAlignment="Bottom"/>
-                <TextBox x:Name="txtProvince" HorizontalAlignment="Left" Height="23" Margin="81,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                <TextBox x:Name="txtCP" HorizontalAlignment="Left" Height="23" Margin="81,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="txtVille" HorizontalAlignment="Left" Margin="81,0,0,190.2" TextWrapping="Wrap" Width="120" Height="23" VerticalAlignment="Bottom" MaxLength="50"/>
+                <TextBox x:Name="txtProvince" HorizontalAlignment="Left" Height="23" Margin="81,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="50"/>
+                <TextBox x:Name="txtCP" HorizontalAlignment="Left" Height="23" Margin="81,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="7"/>
                 <Label Content="Telephone" HorizontalAlignment="Left" Margin="4,187,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtTelephone" HorizontalAlignment="Left" Height="23" Margin="81,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="txtTelephone" HorizontalAlignment="Left" Height="23" Margin="81,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" MaxLength="50"/>
                 <Label Content="Adresse" HorizontalAlignment="Left" Margin="4,66,0,0" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtAdresse" HorizontalAlignment="Left" Margin="81,0,0,220.2" TextWrapping="Wrap" Width="120" RenderTransformOrigin="0.475,-0.435" Height="23" VerticalAlignment="Bottom"/>
+                <TextBox x:Name="txtAdresse" HorizontalAlignment="Left" Margin="81,0,0,220.2" TextWrapping="Wrap" Width="120" RenderTransformOrigin="0.475,-0.435" Height="23" VerticalAlignment="Bottom" MaxLength="200"/>
                 <Button x:Name="btnAjouter" Content="Ajouter" HorizontalAlignment="Left" Margin="18,255,0,0" VerticalAlignment="Top" Width="75" Click="btnAjouter_Click" ToolTip="Ajouter un  parent a la base de données" Height="20"/>
                 <Button x:Name="btnModifier" Content="Modifier" HorizontalAlignment="Left" Margin="105,255,0,0" VerticalAlignment="Top" Width="75" Click="btnModifier_Click" Height="20"/>
                 <Button x:Name="btnSupprimer" Content="Supprimer" HorizontalAlignment="Left" Margin="192,255,0,0" VerticalAlignment="Top" Width="75" Click="btnSupprimer_Click" Height="20"/>

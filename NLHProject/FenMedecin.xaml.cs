@@ -48,9 +48,19 @@ namespace NLHProject
             var query =
                 from dossier in myBDD.tblDossierAdmissions
                 join pat in myBDD.tblPatients on dossier.NSS equals pat.NSS
-                select new { dossier.IDAdmission,dossier.NSS ,dossier.dateAdmission,dossier.dateChirurgie,dossier.dateConge,pat.nom,pat.prenom };
+                select new { dossier.IDAdmission, dossier.NSS, dossier.dateAdmission, dossier.dateChirurgie, dossier.dateConge, pat.nom, pat.prenom };
 
-                dgDossiers.DataContext = query.ToList();
+            var lstDossiers = query.ToList();
+            if (chkCongeNull.IsChecked == true)
+            {
+                lstDossiers = query.Where(dc => dc.dateConge == null).ToList();
+            }
+            else if (chkCongeNull.IsChecked == false)
+            {
+                lstDossiers = query.ToList();
+            }
+
+            dgDossiers.DataContext = lstDossiers;
         }
 
         private void dgDossiers_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -80,13 +90,13 @@ namespace NLHProject
 
         private void btnMAJConge_Click(object sender, RoutedEventArgs e)
         {
-            if (dgDossiers.SelectedIndex == -1)
+            if (dgDossiers.SelectedIndex == -1 || dpConge.SelectedDate==null)
                 MessageBox.Show("Vous devez selectionner un dossier et une date de congé", "Données manquantes" , MessageBoxButton.OK, MessageBoxImage.Warning);
             else
             {
                 var query =
                     from dossier in myBDD.tblDossierAdmissions
-                    select dossier;// new { dossier.IDAdmission, dossier.NSS, dossier.dateAdmission, dossier.dateChirurgie, dossier.dateConge, nomP = pat.nom, prenomP = pat.prenom };
+                    select dossier;
 
                 var lstDossiers = query.ToList();
                 if (chkCongeNull.IsChecked == true)
@@ -98,28 +108,18 @@ namespace NLHProject
                     lstDossiers = query.ToList();
                 }
 
+                var selectedDossier = lstDossiers.ElementAt(dgDossiers.SelectedIndex);
 
-
-                var query =
-                 from dossier in myBDD.tblDossierAdmissions
-                 where dossier.NSS == txtNss.Text
-                 select new { dossier.IDAdmission, dossier.dateConge };
-
-                 var selectedDossier = query.FirstOrDefault();
-                 var sAdmission = 
-                    (from dossier in myBDD.tblDossierAdmissions where dossier.IDAdmission == selectedDossier.IDAdmission
-                     select dossier).First();
-
-                if (dpConge.SelectedDate < sAdmission.dateAdmission)
+                if (dpConge.SelectedDate < selectedDossier.dateAdmission)
                 {
                     MessageBox.Show("La date de congé doit etre apres la date d'admission", "Date de congé incorrecte", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
-                sAdmission.dateConge = dpConge.SelectedDate;
+                selectedDossier.dateConge = dpConge.SelectedDate;
 
                 var slit = (from lit in myBDD.tblLits
-                             where lit.numerolit == sAdmission.numeroLit
+                             where lit.numerolit == selectedDossier.numeroLit
                              select lit).First();
 
                 slit.occupe = false;

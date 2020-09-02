@@ -20,7 +20,7 @@
                 <Label Content="Prenom" HorizontalAlignment="Left" Margin="12,70,0,0" VerticalAlignment="Top"/>
                 <TextBox x:Name="txtPrenomPatient" HorizontalAlignment="Left" Height="24" Margin="130,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
                 <TextBox x:Name="txtNomPatient" HorizontalAlignment="Left" Height="24" Margin="130,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-                <TextBox x:Name="txtNSS" HorizontalAlignment="Left" Height="24" Margin="130,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" BorderBrush="Red"/>
+                <TextBox x:Name="txtNSS" HorizontalAlignment="Left" Height="24" Margin="130,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" BorderBrush="Red" MaxLength="9" MaxLines="1" ToolTip="Numero de securité sociale" PreviewTextInput="txtNSS_PreviewTextInput"/>
                 <DatePicker x:Name="dpDateNaissance" HorizontalAlignment="Left" Margin="130,100,0,0" VerticalAlignment="Top" Height="24" Width="149"/>
                 <Label Content="Date de naissance" HorizontalAlignment="Left" Margin="12,99,0,0" VerticalAlignment="Top"/>
                 <Label Content="Ville" HorizontalAlignment="Left" Margin="12,158,0,0" VerticalAlignment="Top"/>

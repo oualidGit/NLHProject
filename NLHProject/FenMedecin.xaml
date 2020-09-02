@@ -28,8 +28,8 @@
                 <Label Content="Prenom" HorizontalAlignment="Left" Margin="3,65,0,0" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
-        <Label Content="Attribution de congés" HorizontalAlignment="Left" Margin="13,0,0,0" VerticalAlignment="Top" BorderBrush="White" FontSize="20" FontWeight="Bold" Width="700"/>
-        <Label x:Name="lblBienvenueMedecin" Content="Label" HorizontalAlignment="Left" Margin="13,37,0,0" VerticalAlignment="Top" Width="177"/>
+        <Label Content="Attribution de congés" HorizontalAlignment="Left" Margin="15,5,0,0" VerticalAlignment="Top" BorderBrush="White" FontSize="20" FontWeight="Bold" Width="621"/>
+        <Label x:Name="lblBienvenueMedecin" Content="Label" HorizontalAlignment="Left" Margin="36,61,0,0" VerticalAlignment="Top" Width="177"/>
         <GroupBox Header="Patients" HorizontalAlignment="Left" Height="228" Margin="11,131,0,0" VerticalAlignment="Top" Width="445">
             <GroupBox.BorderBrush>
                 <SolidColorBrush Color="White"/>
