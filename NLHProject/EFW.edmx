@@ -1,0 +1,623 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NLHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tblAdmin">
+          <Key>
+            <PropertyRef Name="user" />
+          </Key>
+          <Property Name="user" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCompagnies">
+          <Key>
+            <PropertyRef Name="IDCompagnie" />
+          </Key>
+          <Property Name="IDCompagnie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblDepartement">
+          <Key>
+            <PropertyRef Name="IDDepartement" />
+          </Key>
+          <Property Name="IDDepartement" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblDossierAdmission">
+          <Key>
+            <PropertyRef Name="IDAdmission" />
+          </Key>
+          <Property Name="IDAdmission" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="chirurgieProgrammee" Type="bit" />
+          <Property Name="dateAdmission" Type="date" />
+          <Property Name="dateChirurgie" Type="date" />
+          <Property Name="dateConge" Type="date" />
+          <Property Name="televiseur" Type="bit" />
+          <Property Name="telephone" Type="bit" />
+          <Property Name="NSS" Type="nvarchar" MaxLength="50" />
+          <Property Name="numeroLit" Type="int" />
+          <Property Name="IDMedecin" Type="int" />
+        </EntityType>
+        <EntityType Name="tblLits">
+          <Key>
+            <PropertyRef Name="numerolit" />
+          </Key>
+          <Property Name="numerolit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="occupe" Type="bit" />
+          <Property Name="numeroType" Type="int" />
+          <Property Name="IDDepartement" Type="int" />
+        </EntityType>
+        <EntityType Name="tblMedecins">
+          <Key>
+            <PropertyRef Name="IDMedecin" />
+          </Key>
+          <Property Name="IDMedecin" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" />
+          <Property Name="specialite" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblParents">
+          <Key>
+            <PropertyRef Name="refParent" />
+          </Key>
+          <Property Name="refParent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="adresse" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ville" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="province" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="codePostal" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPatients">
+          <Key>
+            <PropertyRef Name="NSS" />
+          </Key>
+          <Property Name="NSS" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dateNaissance" Type="date" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" />
+          <Property Name="adresse" Type="nvarchar" MaxLength="200" />
+          <Property Name="ville" Type="nvarchar" MaxLength="50" />
+          <Property Name="province" Type="nvarchar" MaxLength="50" />
+          <Property Name="codePostal" Type="nvarchar" MaxLength="50" />
+          <Property Name="telephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDCompagnie" Type="int" />
+          <Property Name="refParent" Type="int" />
+        </EntityType>
+        <EntityType Name="tblTypesLit">
+          <Key>
+            <PropertyRef Name="numeroType" />
+          </Key>
+          <Property Name="numeroType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_tblDossierAdmission_tblLits">
+          <End Role="tblLits" Type="Self.tblLits" Multiplicity="0..1" />
+          <End Role="tblDossierAdmission" Type="Self.tblDossierAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLits">
+              <PropertyRef Name="numerolit" />
+            </Principal>
+            <Dependent Role="tblDossierAdmission">
+              <PropertyRef Name="numeroLit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDossierAdmission_tblMedecins">
+          <End Role="tblMedecins" Type="Self.tblMedecins" Multiplicity="0..1" />
+          <End Role="tblDossierAdmission" Type="Self.tblDossierAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMedecins">
+              <PropertyRef Name="IDMedecin" />
+            </Principal>
+            <Dependent Role="tblDossierAdmission">
+              <PropertyRef Name="IDMedecin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDossierAdmission_tblPatients">
+          <End Role="tblPatients" Type="Self.tblPatients" Multiplicity="0..1" />
+          <End Role="tblDossierAdmission" Type="Self.tblDossierAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatients">
+              <PropertyRef Name="NSS" />
+            </Principal>
+            <Dependent Role="tblDossierAdmission">
+              <PropertyRef Name="NSS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLits_tblDepartement">
+          <End Role="tblDepartement" Type="Self.tblDepartement" Multiplicity="0..1" />
+          <End Role="tblLits" Type="Self.tblLits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDepartement">
+              <PropertyRef Name="IDDepartement" />
+            </Principal>
+            <Dependent Role="tblLits">
+              <PropertyRef Name="IDDepartement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLits_tblTypesLit">
+          <End Role="tblTypesLit" Type="Self.tblTypesLit" Multiplicity="0..1" />
+          <End Role="tblLits" Type="Self.tblLits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTypesLit">
+              <PropertyRef Name="numeroType" />
+            </Principal>
+            <Dependent Role="tblLits">
+              <PropertyRef Name="numeroType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatients_tblCompagnies">
+          <End Role="tblCompagnies" Type="Self.tblCompagnies" Multiplicity="0..1" />
+          <End Role="tblPatients" Type="Self.tblPatients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompagnies">
+              <PropertyRef Name="IDCompagnie" />
+            </Principal>
+            <Dependent Role="tblPatients">
+              <PropertyRef Name="IDCompagnie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatients_tblParents">
+          <End Role="tblParents" Type="Self.tblParents" Multiplicity="0..1" />
+          <End Role="tblPatients" Type="Self.tblPatients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblParents">
+              <PropertyRef Name="refParent" />
+            </Principal>
+            <Dependent Role="tblPatients">
+              <PropertyRef Name="refParent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NLHModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAdmin" EntityType="Self.tblAdmin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCompagnies" EntityType="Self.tblCompagnies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDepartement" EntityType="Self.tblDepartement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDossierAdmission" EntityType="Self.tblDossierAdmission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLits" EntityType="Self.tblLits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMedecins" EntityType="Self.tblMedecins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblParents" EntityType="Self.tblParents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPatients" EntityType="Self.tblPatients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblTypesLit" EntityType="Self.tblTypesLit" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblDossierAdmission_tblLits" Association="Self.FK_tblDossierAdmission_tblLits">
+            <End Role="tblLits" EntitySet="tblLits" />
+            <End Role="tblDossierAdmission" EntitySet="tblDossierAdmission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDossierAdmission_tblMedecins" Association="Self.FK_tblDossierAdmission_tblMedecins">
+            <End Role="tblMedecins" EntitySet="tblMedecins" />
+            <End Role="tblDossierAdmission" EntitySet="tblDossierAdmission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDossierAdmission_tblPatients" Association="Self.FK_tblDossierAdmission_tblPatients">
+            <End Role="tblPatients" EntitySet="tblPatients" />
+            <End Role="tblDossierAdmission" EntitySet="tblDossierAdmission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLits_tblDepartement" Association="Self.FK_tblLits_tblDepartement">
+            <End Role="tblDepartement" EntitySet="tblDepartement" />
+            <End Role="tblLits" EntitySet="tblLits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLits_tblTypesLit" Association="Self.FK_tblLits_tblTypesLit">
+            <End Role="tblTypesLit" EntitySet="tblTypesLit" />
+            <End Role="tblLits" EntitySet="tblLits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatients_tblCompagnies" Association="Self.FK_tblPatients_tblCompagnies">
+            <End Role="tblCompagnies" EntitySet="tblCompagnies" />
+            <End Role="tblPatients" EntitySet="tblPatients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatients_tblParents" Association="Self.FK_tblPatients_tblParents">
+            <End Role="tblParents" EntitySet="tblParents" />
+            <End Role="tblPatients" EntitySet="tblPatients" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NLHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblAdmin">
+          <Key>
+            <PropertyRef Name="user" />
+          </Key>
+          <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCompagny">
+          <Key>
+            <PropertyRef Name="IDCompagnie" />
+          </Key>
+          <Property Name="IDCompagnie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPatients" Relationship="Self.FK_tblPatients_tblCompagnies" FromRole="tblCompagnies" ToRole="tblPatients" />
+        </EntityType>
+        <EntityType Name="tblDepartement">
+          <Key>
+            <PropertyRef Name="IDDepartement" />
+          </Key>
+          <Property Name="IDDepartement" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblLits" Relationship="Self.FK_tblLits_tblDepartement" FromRole="tblDepartement" ToRole="tblLits" />
+        </EntityType>
+        <EntityType Name="tblDossierAdmission">
+          <Key>
+            <PropertyRef Name="IDAdmission" />
+          </Key>
+          <Property Name="IDAdmission" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="chirurgieProgrammee" Type="Boolean" />
+          <Property Name="dateAdmission" Type="DateTime" Precision="0" />
+          <Property Name="dateChirurgie" Type="DateTime" Precision="0" />
+          <Property Name="dateConge" Type="DateTime" Precision="0" />
+          <Property Name="televiseur" Type="Boolean" />
+          <Property Name="telephone" Type="Boolean" />
+          <Property Name="NSS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="numeroLit" Type="Int32" />
+          <Property Name="IDMedecin" Type="Int32" />
+          <NavigationProperty Name="tblLit" Relationship="Self.FK_tblDossierAdmission_tblLits" FromRole="tblDossierAdmission" ToRole="tblLits" />
+          <NavigationProperty Name="tblMedecin" Relationship="Self.FK_tblDossierAdmission_tblMedecins" FromRole="tblDossierAdmission" ToRole="tblMedecins" />
+          <NavigationProperty Name="tblPatient" Relationship="Self.FK_tblDossierAdmission_tblPatients" FromRole="tblDossierAdmission" ToRole="tblPatients" />
+        </EntityType>
+        <EntityType Name="tblLit">
+          <Key>
+            <PropertyRef Name="numerolit" />
+          </Key>
+          <Property Name="numerolit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="occupe" Type="Boolean" />
+          <Property Name="numeroType" Type="Int32" />
+          <Property Name="IDDepartement" Type="Int32" />
+          <NavigationProperty Name="tblDepartement" Relationship="Self.FK_tblLits_tblDepartement" FromRole="tblLits" ToRole="tblDepartement" />
+          <NavigationProperty Name="tblDossierAdmissions" Relationship="Self.FK_tblDossierAdmission_tblLits" FromRole="tblLits" ToRole="tblDossierAdmission" />
+          <NavigationProperty Name="tblTypesLit" Relationship="Self.FK_tblLits_tblTypesLit" FromRole="tblLits" ToRole="tblTypesLit" />
+        </EntityType>
+        <EntityType Name="tblMedecin">
+          <Key>
+            <PropertyRef Name="IDMedecin" />
+          </Key>
+          <Property Name="IDMedecin" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="specialite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblDossierAdmissions" Relationship="Self.FK_tblDossierAdmission_tblMedecins" FromRole="tblMedecins" ToRole="tblDossierAdmission" />
+        </EntityType>
+        <EntityType Name="tblParent">
+          <Key>
+            <PropertyRef Name="refParent" />
+          </Key>
+          <Property Name="refParent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ville" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="codePostal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblPatients" Relationship="Self.FK_tblPatients_tblParents" FromRole="tblParents" ToRole="tblPatients" />
+        </EntityType>
+        <EntityType Name="tblPatient">
+          <Key>
+            <PropertyRef Name="NSS" />
+          </Key>
+          <Property Name="NSS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateNaissance" Type="DateTime" Precision="0" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adresse" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ville" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="codePostal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDCompagnie" Type="Int32" />
+          <Property Name="refParent" Type="Int32" />
+          <NavigationProperty Name="tblCompagny" Relationship="Self.FK_tblPatients_tblCompagnies" FromRole="tblPatients" ToRole="tblCompagnies" />
+          <NavigationProperty Name="tblDossierAdmissions" Relationship="Self.FK_tblDossierAdmission_tblPatients" FromRole="tblPatients" ToRole="tblDossierAdmission" />
+          <NavigationProperty Name="tblParent" Relationship="Self.FK_tblPatients_tblParents" FromRole="tblPatients" ToRole="tblParents" />
+        </EntityType>
+        <EntityType Name="tblTypesLit">
+          <Key>
+            <PropertyRef Name="numeroType" />
+          </Key>
+          <Property Name="numeroType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblLits" Relationship="Self.FK_tblLits_tblTypesLit" FromRole="tblTypesLit" ToRole="tblLits" />
+        </EntityType>
+        <Association Name="FK_tblPatients_tblCompagnies">
+          <End Role="tblCompagnies" Type="Self.tblCompagny" Multiplicity="0..1" />
+          <End Role="tblPatients" Type="Self.tblPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompagnies">
+              <PropertyRef Name="IDCompagnie" />
+            </Principal>
+            <Dependent Role="tblPatients">
+              <PropertyRef Name="IDCompagnie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLits_tblDepartement">
+          <End Role="tblDepartement" Type="Self.tblDepartement" Multiplicity="0..1" />
+          <End Role="tblLits" Type="Self.tblLit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDepartement">
+              <PropertyRef Name="IDDepartement" />
+            </Principal>
+            <Dependent Role="tblLits">
+              <PropertyRef Name="IDDepartement" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDossierAdmission_tblLits">
+          <End Role="tblLits" Type="Self.tblLit" Multiplicity="0..1" />
+          <End Role="tblDossierAdmission" Type="Self.tblDossierAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblLits">
+              <PropertyRef Name="numerolit" />
+            </Principal>
+            <Dependent Role="tblDossierAdmission">
+              <PropertyRef Name="numeroLit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDossierAdmission_tblMedecins">
+          <End Role="tblMedecins" Type="Self.tblMedecin" Multiplicity="0..1" />
+          <End Role="tblDossierAdmission" Type="Self.tblDossierAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMedecins">
+              <PropertyRef Name="IDMedecin" />
+            </Principal>
+            <Dependent Role="tblDossierAdmission">
+              <PropertyRef Name="IDMedecin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDossierAdmission_tblPatients">
+          <End Role="tblPatients" Type="Self.tblPatient" Multiplicity="0..1" />
+          <End Role="tblDossierAdmission" Type="Self.tblDossierAdmission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPatients">
+              <PropertyRef Name="NSS" />
+            </Principal>
+            <Dependent Role="tblDossierAdmission">
+              <PropertyRef Name="NSS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblLits_tblTypesLit">
+          <End Role="tblTypesLit" Type="Self.tblTypesLit" Multiplicity="0..1" />
+          <End Role="tblLits" Type="Self.tblLit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblTypesLit">
+              <PropertyRef Name="numeroType" />
+            </Principal>
+            <Dependent Role="tblLits">
+              <PropertyRef Name="numeroType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPatients_tblParents">
+          <End Role="tblParents" Type="Self.tblParent" Multiplicity="0..1" />
+          <End Role="tblPatients" Type="Self.tblPatient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblParents">
+              <PropertyRef Name="refParent" />
+            </Principal>
+            <Dependent Role="tblPatients">
+              <PropertyRef Name="refParent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NLHEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tblAdmins" EntityType="Self.tblAdmin" />
+          <EntitySet Name="tblCompagnies" EntityType="Self.tblCompagny" />
+          <EntitySet Name="tblDepartements" EntityType="Self.tblDepartement" />
+          <EntitySet Name="tblDossierAdmissions" EntityType="Self.tblDossierAdmission" />
+          <EntitySet Name="tblLits" EntityType="Self.tblLit" />
+          <EntitySet Name="tblMedecins" EntityType="Self.tblMedecin" />
+          <EntitySet Name="tblParents" EntityType="Self.tblParent" />
+          <EntitySet Name="tblPatients" EntityType="Self.tblPatient" />
+          <EntitySet Name="tblTypesLits" EntityType="Self.tblTypesLit" />
+          <AssociationSet Name="FK_tblPatients_tblCompagnies" Association="Self.FK_tblPatients_tblCompagnies">
+            <End Role="tblCompagnies" EntitySet="tblCompagnies" />
+            <End Role="tblPatients" EntitySet="tblPatients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLits_tblDepartement" Association="Self.FK_tblLits_tblDepartement">
+            <End Role="tblDepartement" EntitySet="tblDepartements" />
+            <End Role="tblLits" EntitySet="tblLits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDossierAdmission_tblLits" Association="Self.FK_tblDossierAdmission_tblLits">
+            <End Role="tblLits" EntitySet="tblLits" />
+            <End Role="tblDossierAdmission" EntitySet="tblDossierAdmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDossierAdmission_tblMedecins" Association="Self.FK_tblDossierAdmission_tblMedecins">
+            <End Role="tblMedecins" EntitySet="tblMedecins" />
+            <End Role="tblDossierAdmission" EntitySet="tblDossierAdmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDossierAdmission_tblPatients" Association="Self.FK_tblDossierAdmission_tblPatients">
+            <End Role="tblPatients" EntitySet="tblPatients" />
+            <End Role="tblDossierAdmission" EntitySet="tblDossierAdmissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblLits_tblTypesLit" Association="Self.FK_tblLits_tblTypesLit">
+            <End Role="tblTypesLit" EntitySet="tblTypesLits" />
+            <End Role="tblLits" EntitySet="tblLits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPatients_tblParents" Association="Self.FK_tblPatients_tblParents">
+            <End Role="tblParents" EntitySet="tblParents" />
+            <End Role="tblPatients" EntitySet="tblPatients" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NLHModelStoreContainer" CdmEntityContainer="NLHEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="NLHModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAdmins">
+            <EntityTypeMapping TypeName="NLHModel.tblAdmin">
+              <MappingFragment StoreEntitySet="tblAdmin">
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCompagnies">
+            <EntityTypeMapping TypeName="NLHModel.tblCompagny">
+              <MappingFragment StoreEntitySet="tblCompagnies">
+                <ScalarProperty Name="IDCompagnie" ColumnName="IDCompagnie" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDepartements">
+            <EntityTypeMapping TypeName="NLHModel.tblDepartement">
+              <MappingFragment StoreEntitySet="tblDepartement">
+                <ScalarProperty Name="IDDepartement" ColumnName="IDDepartement" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDossierAdmissions">
+            <EntityTypeMapping TypeName="NLHModel.tblDossierAdmission">
+              <MappingFragment StoreEntitySet="tblDossierAdmission">
+                <ScalarProperty Name="IDAdmission" ColumnName="IDAdmission" />
+                <ScalarProperty Name="chirurgieProgrammee" ColumnName="chirurgieProgrammee" />
+                <ScalarProperty Name="dateAdmission" ColumnName="dateAdmission" />
+                <ScalarProperty Name="dateChirurgie" ColumnName="dateChirurgie" />
+                <ScalarProperty Name="dateConge" ColumnName="dateConge" />
+                <ScalarProperty Name="televiseur" ColumnName="televiseur" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="NSS" ColumnName="NSS" />
+                <ScalarProperty Name="numeroLit" ColumnName="numeroLit" />
+                <ScalarProperty Name="IDMedecin" ColumnName="IDMedecin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLits">
+            <EntityTypeMapping TypeName="NLHModel.tblLit">
+              <MappingFragment StoreEntitySet="tblLits">
+                <ScalarProperty Name="numerolit" ColumnName="numerolit" />
+                <ScalarProperty Name="occupe" ColumnName="occupe" />
+                <ScalarProperty Name="numeroType" ColumnName="numeroType" />
+                <ScalarProperty Name="IDDepartement" ColumnName="IDDepartement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMedecins">
+            <EntityTypeMapping TypeName="NLHModel.tblMedecin">
+              <MappingFragment StoreEntitySet="tblMedecins">
+                <ScalarProperty Name="IDMedecin" ColumnName="IDMedecin" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="specialite" ColumnName="specialite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblParents">
+            <EntityTypeMapping TypeName="NLHModel.tblParent">
+              <MappingFragment StoreEntitySet="tblParents">
+                <ScalarProperty Name="refParent" ColumnName="refParent" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="province" ColumnName="province" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPatients">
+            <EntityTypeMapping TypeName="NLHModel.tblPatient">
+              <MappingFragment StoreEntitySet="tblPatients">
+                <ScalarProperty Name="NSS" ColumnName="NSS" />
+                <ScalarProperty Name="dateNaissance" ColumnName="dateNaissance" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="province" ColumnName="province" />
+                <ScalarProperty Name="codePostal" ColumnName="codePostal" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="IDCompagnie" ColumnName="IDCompagnie" />
+                <ScalarProperty Name="refParent" ColumnName="refParent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTypesLits">
+            <EntityTypeMapping TypeName="NLHModel.tblTypesLit">
+              <MappingFragment StoreEntitySet="tblTypesLit">
+                <ScalarProperty Name="numeroType" ColumnName="numeroType" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
